@@ -1,6 +1,6 @@
-package api;
+import api.EdgeData;
 
-public class EdgeDataImp implements EdgeData {
+public class MyEdgeData implements api.EdgeData {
 
     int src;
     int dst;
@@ -8,18 +8,12 @@ public class EdgeDataImp implements EdgeData {
     String info;
     int tag;
 
-    public EdgeDataImp(int src, int dst, double weight, String info, int tag){
+    public MyEdgeData(int src, int dst, double weight){
         this.src = src;
         this.dst = dst;
         this.weight = weight;
-        this.info = info;
-        this.tag = tag;
-    }
-
-    public EdgeDataImp(int src, int dst, double weight){
-        this.src = src;
-        this.dst = dst;
-        this.weight = weight;
+        this.info = "";
+        this.tag = 0;
     }
 
     @Override
