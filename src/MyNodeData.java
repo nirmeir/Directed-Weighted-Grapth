@@ -1,19 +1,21 @@
-package api;
+import api.GeoLocation;
+import api.NodeData;
 
-public class NodeDataImp implements NodeData {
-    GeoLocationImp loc;
+public class MyNodeData implements api.NodeData {
+    GeoLocation loc;
     int key;
     double weight;
     String info;
     int tag;
 
-    public NodeDataImp(GeoLocationImp loc, int key , double weight, String info, int tag){
+    public MyNodeData(GeoLocation loc, int key){
         this.loc = loc;
         this.key = key;
-        this.weight = weight;
-        this.info = info;
-        this.tag = tag;
+        this.weight = 0;
+        this.info = "";
+        this.tag = 0;
     }
+
 
     @Override
     public int getKey() {
@@ -21,13 +23,13 @@ public class NodeDataImp implements NodeData {
     }
 
     @Override
-    public GeoLocationImp getLocation() {
+    public GeoLocation getLocation() {
         return loc;
     }
 
     @Override
     public void setLocation(GeoLocation p) {
-        this.loc = new GeoLocationImp(p.x(), p.y(), p.z());
+        this.loc = new MyGeoLocation(p.x(), p.y(), p.z());
     }
 
     @Override

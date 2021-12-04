@@ -1,15 +1,22 @@
-package api;
+import api.GeoLocation;
 
-public class GeoLocationImp implements GeoLocation {
+public class MyGeoLocation implements api.GeoLocation {
 
     private double x;
     private double y;
     private double z;
 
-    public GeoLocationImp(double x, double y, double z){
+    public MyGeoLocation(double x, double y, double z){
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public MyGeoLocation(String location) {
+        String[] loc = location.split(",");
+        this.x = Double.parseDouble(loc[0]);
+        this.y = Double.parseDouble(loc[1]);
+        this.z = Double.parseDouble(loc[2]);
     }
 
     @Override
