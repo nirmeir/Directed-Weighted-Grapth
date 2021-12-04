@@ -27,6 +27,18 @@ public class GeoLocationImp implements GeoLocation {
         return this.z;
     }
 
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+
+
+
     @Override
     public double distance(api.GeoLocation g) {
         return Math.sqrt(Math.pow(this.x - g.x(),2) + Math.pow(this.y - g.y(),2) + Math.pow(this.z - g.z(),2));
