@@ -83,8 +83,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
     public double shortestPathDist(int src, int dest) {
         HashMap<NodeData[], Double> res = DijkstraAlgo(this.graph, src, dest);
         Map.Entry<NodeData[], Double> entry = res.entrySet().iterator().next();
-        double dist= entry.getValue();
-        return dist;
+        return entry.getValue();
     }
 
     @Override
@@ -174,8 +173,33 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public NodeData center() {
-        return null;
+        if (!isConnected()) { //if the graph isn't connected then we return null (there is no center)
+            return null;
+        }
+        double maxDis = Double.MAX_VALUE; //max value so we can find the shortest path
+        int nodeKey = 0;
+        Iterator<NodeData> nodeIter = this.graph.nodeIter();
+        while(nodeIter.hasNext()){ //finding the max shortest path to all others nodes
+            int src = nodeIter.next().getKey();
+            double maxShortPath = 0;
+            Iterator<NodeData> nodeIter2 = this.graph.nodeIter();
+            while(nodeIter2.hasNext()){ //finding the shortest path for each node
+                NodeData dst = nodeIter2.next();
+                if(dst != graph.getNode(src)){
+                    double checkPath = shortestPathDist(src,dst.getKey());
+                    if (checkPath > maxShortPath){
+                        maxShortPath = checkPath;
+                    }
+                }
+            }
+            if (maxShortPath < maxDis){
+                maxDis = maxShortPath;
+                nodeKey = src; // setting the center node of the graph
+            }
+        }
+        return this.graph.getNode(nodeKey);
     }
+
 
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
