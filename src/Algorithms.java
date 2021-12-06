@@ -3,6 +3,9 @@ import api.DirectedWeightedGraphAlgorithms;
 import api.EdgeData;
 import api.NodeData;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.*;
 
 public class Algorithms implements DirectedWeightedGraphAlgorithms {
@@ -15,7 +18,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public void init(DirectedWeightedGraph g) {
-        this.graph = new MyDirectedWeightedGraph();
+        this.graph = new MyDirectedWeightedGraph((MyDirectedWeightedGraph) g);
     }
 
     @Override
@@ -68,11 +71,10 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
     }
 
     private void DFS(NodeData x, MyDirectedWeightedGraph graph) {
-
         x.setTag(1);
-        Iterator<EdgeData> iterator = graph.edgeIter(x.getKey());
-        while (iterator.hasNext()) {
-            NodeData next = graph.getNode(iterator.next().getDest());
+        Iterator<EdgeData> edgeIter = graph.edgeIter(x.getKey());
+        while (edgeIter.hasNext()) {
+            NodeData next = graph.getNode(edgeIter.next().getDest());
             if (next.getTag() == 0) {
                 DFS(next, graph);
             }
@@ -105,8 +107,8 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
     public HashMap<NodeData[], Double> DijkstraAlgo(MyDirectedWeightedGraph graph, int src, int dest){
 
         List<Integer> visit = new ArrayList<>();
-        double dist[] = new double[graph.nodeSize()];
-        NodeData prev[] = new NodeData[graph.nodeSize()];
+        double[] dist = new double[graph.nodeSize()];
+        NodeData[] prev = new NodeData[graph.nodeSize()];
         for (int i =0; i<dist.length; i++){
             visit.add(i);
             dist[i] = Integer.MAX_VALUE;
@@ -124,9 +126,9 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
                 }
             }
 
-            Iterator<EdgeData> t = graph.edgeIter(lowerIndex);
-            while(t.hasNext()){
-                EdgeData ed = t.next();
+            Iterator<EdgeData> edgeIter = graph.edgeIter(lowerIndex);
+            while(edgeIter.hasNext()){
+                EdgeData ed = edgeIter.next();
                 double alt = dist[lowerIndex] + ed.getWeight();
                 if(alt < dist[ed.getDest()]){
                     dist[ed.getDest()] = alt;
@@ -139,37 +141,6 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         ret.put(prev, dist[dest]);
         return ret;
     }
-
-/*    public void Dijkstra_Algo(MyDirectedWeightedGraph graph, NodeData src){
-        PriorityQueue<NodeData> nodeQ = new PriorityQueue<>();
-        src.setTag(0);
-        src.setWeight(0);
-        nodeQ.add(src);
-
-        Iterator<NodeData> nodeIter = graph.nodeIter();
-        while(nodeIter.hasNext()){
-            NodeData node = nodeIter.next();
-            node.setWeight(Integer.MAX_VALUE);
-            node.setTag(0);
-            //prev vertex
-            if (node != src){
-                nodeQ.add(node);
-            }
-        }
-        while(!nodeQ.isEmpty()){
-            NodeData currNode = nodeQ.remove();
-            Iterator<EdgeData> edgeIter = graph.edgeIter(currNode.getKey());
-            while(edgeIter.hasNext()){
-                double EdgeWeight = edgeIter.next().getWeight();
-                double checkDis = EdgeWeight + currNode.getWeight();
-                NodeData neighbor = graph.getNode(edgeIter.next().getDest());
-                if (neighbor.getWeight() > checkDis){
-                    neighbor.setWeight(checkDis);
-
-                }
-            }
-        }
-    }*/
 
     @Override
     public NodeData center() {
@@ -200,15 +171,34 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         return this.graph.getNode(nodeKey);
     }
 
-
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
+        if (cities.isEmpty()){ //if cities list is empty return null
+            return null;
+        }
+        List<NodeData> salesman = new ArrayList<>();
+        NodeData start = cities.get(0);
+        // maybe https://www.geeksforgeeks.org/travelling-salesman-problem-set-2-approximate-using-mst/
+        // and prim's algorithm https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
 
-        return null;
+        //garbage
+/*        salesman.add(start); //adding to the list the starting city
+        for(int i = 1; i < cities.size(); i++){ //loop on all the cities and find for them the shortest path
+            NodeData dst = cities.get(i);
+            List<NodeData> path = shortestPath(start.getKey(), dst.getKey());
+            for (int j = 0; j < path.size(); j++){ //loop on all nodes that are part of the path from one city to another
+                if (path.get(i) != start && !salesman.contains(path.get(i))){
+                    salesman.add(path.get(i)); //add them to the list
+                }
+            }
+            start = dst; //update the starting city for the next iteration
+        }*/
+        return salesman;
     }
 
     @Override
     public boolean save(String file) {
+
         return false;
     }
 

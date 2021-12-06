@@ -16,7 +16,6 @@ public class MyNodeData implements api.NodeData {
         this.tag = 0;
     }
 
-
     @Override
     public int getKey() {
         return this.key;
@@ -61,4 +60,5 @@ public class MyNodeData implements api.NodeData {
     public void setTag(int t) {
         this.tag = t;
     }
+
 }
