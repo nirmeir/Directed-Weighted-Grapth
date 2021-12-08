@@ -16,7 +16,7 @@ As well as implementing a number of algorithms on the graph.
         similar to the Traveling Salesman Problem but without the limitaion of visiting each node only once.
 5. Saving and loading a graph to and from a .json file which contains an array of Edges and Nodes.
 
-The dijkstra algorithm finds the shortest path between two nodes in a DW graph.
+The Dijkstra algorithm finds the shortest path between two nodes in a DW graph.
 For further reading see: https://en.wikipedia.org/wiki/Dijkstras_algorithm.
 
 Example of the algorithm:
