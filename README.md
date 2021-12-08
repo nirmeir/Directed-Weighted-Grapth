@@ -48,7 +48,7 @@ After you have downloaded the files neccessary (Ex2.jar, /data), open a terminal
 
 ## Input/Output Examples
 ### Example for G1.json input :
-![Building](https://i.imgur.com/Xl0jAQl.png)| ![](https://i.imgur.com/xZjCTM0.png)
+![Building](https://i.imgur.com/LohNcL8.png)| ![](https://i.imgur.com/MQzNuCr.png)
 ##### In Edges :
 - *src* : the ID of the source node.
 - *w* : the weight of the edge.
