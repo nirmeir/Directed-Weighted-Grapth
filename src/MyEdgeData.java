@@ -8,7 +8,7 @@ public class MyEdgeData implements api.EdgeData {
     String info;
     int tag;
 
-    public MyEdgeData(int src, int dst, double weight){
+    public MyEdgeData(int src, double weight, int dst){
         this.src = src;
         this.dst = dst;
         this.weight = weight;

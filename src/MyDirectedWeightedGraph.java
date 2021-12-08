@@ -65,7 +65,7 @@ public class MyDirectedWeightedGraph implements api.DirectedWeightedGraph {
 
     @Override
     public void connect(int src, int dest, double w) {
-        EdgeData edge = new MyEdgeData(src,dest, w);
+        EdgeData edge = new MyEdgeData(src, w, dest);
         String key = Integer.toString(src) + edgeSpaceKey + Integer.toString(dest);
         this.edges.put(key,edge);
 

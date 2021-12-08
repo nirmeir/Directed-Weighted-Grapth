@@ -16,6 +16,10 @@ public class MyNodeData implements api.NodeData {
         this.tag = 0;
     }
 
+    public MyNodeData(int key){
+        this.key = key;
+    }
+
     @Override
     public int getKey() {
         return this.key;
