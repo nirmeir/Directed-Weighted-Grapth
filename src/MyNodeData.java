@@ -65,4 +65,15 @@ public class MyNodeData implements api.NodeData {
         this.tag = t;
     }
 
+
+    @Override
+    public String toString() {
+        return "MyNodeData{" +
+                "loc=" + loc +
+                ", key=" + key +
+                ", weight=" + weight +
+                ", info='" + info + '\'' +
+                ", tag=" + tag +
+                '}';
+    }
 }

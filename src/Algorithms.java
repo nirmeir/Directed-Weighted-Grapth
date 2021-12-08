@@ -11,7 +11,10 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
     private MyDirectedWeightedGraph graph;
 
     public Algorithms() {
-        this.graph = null;
+    }
+
+    public Algorithms(DirectedWeightedGraph g) {
+        this.graph = (MyDirectedWeightedGraph) g;
     }
 
     @Override
@@ -115,22 +118,22 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         dist[src] = 0;
 
         while (!visit.isEmpty()) {
-            int lowerIndex = visit.get(0);
-            double lowerValue = dist[visit.get(0)];
+            int lowerIndex = 0;
+            double lowerValue = dist[visit.get(lowerIndex)];
             for (int i = 1; i < visit.size(); i++) {
                 if (lowerValue > dist[visit.get(i)]) {
-                    lowerIndex = visit.get(i);
+                    lowerIndex = i;
                     lowerValue = dist[visit.get(i)];
                 }
             }
 
-            Iterator<EdgeData> edgeIter = graph.edgeIter(lowerIndex);
+            Iterator<EdgeData> edgeIter = graph.edgeIter(visit.get(lowerIndex));
             while (edgeIter.hasNext()) {
                 EdgeData ed = edgeIter.next();
-                double alt = dist[lowerIndex] + ed.getWeight();
+                double alt = dist[visit.get(lowerIndex)] + ed.getWeight();
                 if (alt < dist[ed.getDest()]) {
                     dist[ed.getDest()] = alt;
-                    prev[ed.getDest()] = graph.getNode(lowerIndex);
+                    prev[ed.getDest()] = graph.getNode(visit.get(lowerIndex));
                 }
             }
             visit.remove(lowerIndex);
@@ -174,19 +177,22 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         if (cities.isEmpty()) { //if cities list is empty return null
             return null;
         }
+        Algorithms algo = new Algorithms(graph);
+        if(!algo.isConnected()){
+            return null;
+        }
         List<NodeData> salesman = new ArrayList<>();
         NodeData start = cities.get(0);
-        // maybe https://www.geeksforgeeks.org/travelling-salesman-problem-set-2-approximate-using-mst/
-        // and prim's algorithm https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
-
-        //garbage
         salesman.add(start); //adding to the list the starting city
         for (int i = 1; i < cities.size(); i++) { //loop on all the cities and find for them the shortest path
             NodeData dst = cities.get(i);
+            if (salesman.contains(dst)) {
+                continue;
+            }
             List<NodeData> path = shortestPath(start.getKey(), dst.getKey());
             for (int j = 0; j < path.size(); j++) { //loop on all nodes that are part of the path from one city to another
-                if (path.get(i) != start) {
-                    salesman.add(path.get(i)); //add them to the list
+                if (path.get(j) != start) {
+                    salesman.add(path.get(j)); //add them to the list
                 }
             }
             start = dst; //update the starting city for the next iteration
@@ -196,7 +202,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public boolean save(String file) {
-         GsonBuilder gsonBuilder = new GsonBuilder();
+        GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
         JsonSerializer<MyDirectedWeightedGraph> serializer = new JsonSerializer<MyDirectedWeightedGraph>() {
             @Override
@@ -205,7 +211,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
                 jsonGraph.add("Edges", new JsonArray());
                 jsonGraph.add("Nodes", new JsonArray());
                 Iterator<EdgeData> edgeIter = graph.edgeIter();
-                while(edgeIter.hasNext()) {
+                while (edgeIter.hasNext()) {
                     JsonObject jsonEdgeObject = new JsonObject();
                     EdgeData edge = edgeIter.next();
                     jsonEdgeObject.addProperty("src", edge.getSrc());
@@ -215,7 +221,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
                 }
 
                 Iterator<NodeData> nodeIter = graph.nodeIter();
-                while(nodeIter.hasNext()) {
+                while (nodeIter.hasNext()) {
                     JsonObject jsonNodeObject = new JsonObject();
                     NodeData node = nodeIter.next();
                     String pos = "" + node.getLocation().x() +
@@ -307,7 +313,28 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
     public static void main(String[] args) throws IOException {
         Algorithms algo = new Algorithms();
         algo.load(".\\data\\G1.json");
-        algo.save("G4.json");
+        double key = algo.shortestPathDist(15, 6);
+        int id = algo.center().getKey();
+
+
+        NodeData nd = new MyNodeData(algo.graph.getNode(0).getLocation(), algo.getGraph().nodeSize());
+        algo.getGraph().addNode(nd);
+
+        System.out.println(algo.isConnected());
+/*        List<NodeData> arr = new ArrayList<>();
+        arr.add(algo.graph.getNode(0));
+        arr.add(algo.graph.getNode(1));
+        arr.add(algo.graph.getNode(2));
+        arr.add(algo.graph.getNode(3));
+        arr.add(algo.graph.getNode(4));
+        arr.add(algo.graph.getNode(6));
+
+        List<NodeData> a = algo.tsp(arr);*/
+
+        System.out.println(key);
+        System.out.println(id);
+        //System.out.println(a.toString());
+        //algo.save("G4.json");
     }
 }
 
