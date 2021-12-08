@@ -196,28 +196,53 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public boolean save(String file) {
-/*        try{
-            ArrayList<EdgeData> edges = new ArrayList<>();
-            Iterator<EdgeData> edgeIter = getGraph().edgeIter();
-            while(edgeIter.hasNext()){
-                EdgeData edge = edgeIter.next();
-                edges.add(new MyEdgeData(edge.getSrc(), edge.getWeight(),edge.getDest()));
-            }
-            ArrayList<NodeData> nodes = new ArrayList<>();
-            Iterator<NodeData> nodeIter = getGraph().nodeIter();
-            while(nodeIter.hasNext()){
-                NodeData node = nodeIter.next();
-                String nodePos = node.getLocation().x() + "," + node.getLocation().y() + "," + node.getLocation().y();
-                MyGeoLocation nodeGeoLoc = new MyGeoLocation(nodePos);
-                nodes.add(new MyNodeData(nodeGeoLoc,node.getKey()));
-            }
-            MyDirectedWeightedGraph graph = new MyDirectedWeightedGraph()
+         GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setPrettyPrinting();
+        JsonSerializer<MyDirectedWeightedGraph> serializer = new JsonSerializer<MyDirectedWeightedGraph>() {
+            @Override
+            public JsonElement serialize(MyDirectedWeightedGraph graph, Type type, JsonSerializationContext jsonSerializationContext) {
+                JsonObject jsonGraph = new JsonObject();
+                jsonGraph.add("Edges", new JsonArray());
+                jsonGraph.add("Nodes", new JsonArray());
+                Iterator<EdgeData> edgeIter = graph.edgeIter();
+                while(edgeIter.hasNext()) {
+                    JsonObject jsonEdgeObject = new JsonObject();
+                    EdgeData edge = edgeIter.next();
+                    jsonEdgeObject.addProperty("src", edge.getSrc());
+                    jsonEdgeObject.addProperty("w", edge.getWeight());
+                    jsonEdgeObject.addProperty("dest", edge.getDest());
+                    jsonGraph.get("Edges").getAsJsonArray().add(jsonEdgeObject);
+                }
 
-        }
-        catch (IOException e){
+                Iterator<NodeData> nodeIter = graph.nodeIter();
+                while(nodeIter.hasNext()) {
+                    JsonObject jsonNodeObject = new JsonObject();
+                    NodeData node = nodeIter.next();
+                    String pos = "" + node.getLocation().x() +
+                            ',' +
+                            node.getLocation().y() +
+                            ',' +
+                            node.getLocation().z();
+                    jsonNodeObject.addProperty("pos", pos);
+                    jsonNodeObject.addProperty("id", node.getKey());
+                    jsonGraph.get("Nodes").getAsJsonArray().add(jsonNodeObject);
+
+                }
+                return jsonGraph;
+            }
+        };
+        gsonBuilder.registerTypeAdapter(MyDirectedWeightedGraph.class, serializer);
+        Gson graphGson = gsonBuilder.create();
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter(file));
+            writer.write(graphGson.toJson(this.graph));
+            writer.flush();
+            writer.close();
+            return true;
+        } catch (IOException e) {
             e.printStackTrace();
-        }*/
-        return false;
+            return false;
+        }
     }
 
     @Override
@@ -281,7 +306,8 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     public static void main(String[] args) throws IOException {
         Algorithms algo = new Algorithms();
-        algo.load("E:\\University\\Year 2\\Semester A\\OOP\\Tasks\\Task 2\\Directed-Weighted-Grapth\\data\\G1.json");
+        algo.load(".\\data\\G1.json");
+        algo.save("G4.json");
     }
 }
 
