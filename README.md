@@ -5,6 +5,7 @@ This project is a part of our Object Oriented Programming course in Java.
 The above project deals with the implementation of a Directed Weighted graph, using Nodes and Edges.
 As well as implementing a number of algorithms on the graph.
 
+![](https://i.stack.imgur.com/hF3mQ.png)
 ## List of algorithms
 1. Checking if a DW graph is strongly connected by using the DFS algorithm.
 
