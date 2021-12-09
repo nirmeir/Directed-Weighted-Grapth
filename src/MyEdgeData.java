@@ -50,4 +50,15 @@ public class MyEdgeData implements api.EdgeData {
     public void setTag(int t) {
         this.tag = t;
     }
+
+    @Override
+    public String toString() {
+        return "MyEdgeData{" +
+                "src=" + src +
+                ", dst=" + dst +
+                ", weight=" + weight +
+                ", info='" + info + '\'' +
+                ", tag=" + tag +
+                '}';
+    }
 }

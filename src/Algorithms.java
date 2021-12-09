@@ -55,29 +55,37 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     private boolean runDFS(MyDirectedWeightedGraph graph) {
         Iterator<NodeData> iterator = graph.nodeIter();
-        NodeData x = iterator.next();
-        x.setTag(0);
         while (iterator.hasNext()) { //setting the tag of all nodes to be 0
             iterator.next().setTag(0);
         }
-        DFS(x, graph); //running DFS on the graph
-
+        Iterator<NodeData> iterator2 = graph.nodeIter();
+        while (iterator2.hasNext()) {
+            NodeData x = iterator2.next();
+            if (x.getTag() == 0) {
+                DFS(x, graph);
+            }
+        }
         iterator = graph.nodeIter();
         while (iterator.hasNext()) { //if one of the nodes has a tag==0 the graph is not connected
             if (iterator.next().getTag() == 0)
                 return false;
         }
-
         return true;
     }
 
     private void DFS(NodeData x, MyDirectedWeightedGraph graph) {
         x.setTag(1);
-        Iterator<EdgeData> edgeIter = graph.edgeIter(x.getKey());
-        while (edgeIter.hasNext()) {
-            NodeData next = graph.getNode(edgeIter.next().getDest());
-            if (next.getTag() == 0) {
-                DFS(next, graph);
+        Stack<NodeData> stack = new Stack<>();
+        stack.push(x);
+        while (!stack.empty()) {
+            x = stack.peek();
+            stack.pop();
+            Iterator<EdgeData> edgeIter = graph.edgeIter(x.getKey());
+            while (edgeIter.hasNext()) {
+                NodeData node = graph.getNode(edgeIter.next().getDest());
+                if (x.getTag() == 0) {
+                    stack.push(node);
+                }
             }
         }
     }
@@ -102,6 +110,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
             nd = prev[nd.getKey()];
         }
         if (nd != null) path.add(0, nd);
+        path.add(this.graph.getNode(dest));
         return path;
     }
 
@@ -252,7 +261,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
     }
 
     @Override
-    public boolean load(String file) throws IOException {
+    public boolean load(String file){
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             StringBuilder jsonString = new StringBuilder();

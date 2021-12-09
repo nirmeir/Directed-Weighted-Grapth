@@ -43,11 +43,17 @@ public class MyGeoLocation implements api.GeoLocation {
         this.y = y;
     }
 
-
-
-
     @Override
     public double distance(api.GeoLocation g) {
         return Math.sqrt(Math.pow(this.x - g.x(),2) + Math.pow(this.y - g.y(),2) + Math.pow(this.z - g.z(),2));
+    }
+
+    @Override
+    public String toString() {
+        return "MyGeoLocation{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
 }
