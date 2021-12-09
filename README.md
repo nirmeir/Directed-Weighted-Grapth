@@ -67,14 +67,13 @@ After you have downloaded the files neccessary (Ex2.jar, /data), open a terminal
 # Analyzing running time
 |Number of nodes|Building the graph|isConnected|Center|
 |---------|---------|---------|---------|
-|G1.json : 17| | | | |
-|G2.json : 31| | | | |
-|G3.json : 48| | | | |
-|100| | | | |
-|1000| | | | |
-|10000| | | | |
-|100000| | | | |
-|1000000| | | | |
+|G1.json : 17|59 ms|67 ms|71 ms|
+|G2.json : 31|60 ms|77 ms|93 ms|
+|G3.json : 48|69 ms|75 ms|177 ms|
+|1000|157 ms|188 ms|4 min 43 sec|
+|10000|473 ms|626 ms|11 min 24 sec|
+|100000|7 sec 63 ms|10 sec 190 ms|timeout|
+|1000000| No memory|
 
 
 
