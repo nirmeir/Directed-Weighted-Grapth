@@ -157,7 +157,6 @@ public class GUI extends JFrame implements ActionListener {
 
             if(ed.getInfo() != null ) {
                 if (ed.getInfo().equals("In Path")) {
-                    System.out.println("hello");
                     g.setColor(shortestPathColor);
                 }
             }
@@ -309,13 +308,9 @@ public class GUI extends JFrame implements ActionListener {
             NodeData nd = shortest.get(i);
             NodeData ndNext = shortest.get(i+1);
 
-            System.out.println(nd.getKey());
-
             nd.setInfo("In Path");
             EdgeData ed = algo.getGraph().getEdge(nd.getKey(), ndNext.getKey());
-            System.out.println( nd.getKey()+ "--" + ndNext.getKey());
             ed.setInfo("In Path");
-            System.out.println(ed);
         }
 
         NodeData nd = shortest.get(shortest.size()-1);
