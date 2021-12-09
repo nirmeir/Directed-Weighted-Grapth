@@ -156,4 +156,14 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
             this.dst = new HashMap<Integer,  EdgeData>();
         }
     }
+
+    @Override
+    public String toString() {
+        return "DirectedWeightedGraphImp{" +
+                "edges=" + edges +
+                ", nodes=" + nodes +
+                ", edgePerNode=" + edgePerNode +
+                ", mc=" + mc +
+                '}';
+    }
 }

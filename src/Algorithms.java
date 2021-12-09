@@ -99,6 +99,9 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public List<NodeData> shortestPath(int src, int dest) {
+        if (src == dest){
+            return null;
+        }
         HashMap<NodeData[], Double> res = DijkstraAlgo(this.graph, src, dest);
         Map.Entry<NodeData[], Double> entry = res.entrySet().iterator().next();
         NodeData[] prev = entry.getKey();
@@ -183,7 +186,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public List<NodeData> tsp(List<NodeData> cities) {
-        if (cities.isEmpty()) { //if cities list is empty return null
+        if (cities == null ||cities.isEmpty()) { //if cities list is empty return null
             return null;
         }
         if( !isConnected()){

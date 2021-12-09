@@ -58,7 +58,7 @@ public class TspScreen {
                     cityFinal[counter++] = Integer.parseInt(a);
                 }
 
-                gui.tsp(cityFinal);
+                gui.tspGUI(cityFinal);
 
                 frame.dispose();
 

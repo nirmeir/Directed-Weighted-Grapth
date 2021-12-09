@@ -292,7 +292,7 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
-    public void tsp(int[] nodes){
+    public void tspGUI(int[] nodes){
         this.clear();
 
         List<NodeData> city = new ArrayList<>();
