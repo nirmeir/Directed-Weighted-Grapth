@@ -1,34 +1,47 @@
-import api.EdgeData;
+import api.GeoLocation;
 
-public class MyEdgeData implements api.EdgeData {
-
-    int src;
-    int dst;
+public class NodeDataImp implements api.NodeData {
+    GeoLocation loc;
+    int key;
     double weight;
     String info;
     int tag;
 
-    public MyEdgeData(int src, double weight, int dst){
-        this.src = src;
-        this.dst = dst;
-        this.weight = weight;
+    public NodeDataImp(GeoLocation loc, int key){
+        this.loc = loc;
+        this.key = key;
+        this.weight = 0;
         this.info = "";
         this.tag = 0;
     }
 
-    @Override
-    public int getSrc() {
-        return this.src;
+    public NodeDataImp(int key){
+        this.key = key;
     }
 
     @Override
-    public int getDest() {
-        return this.dst;
+    public int getKey() {
+        return this.key;
+    }
+
+    @Override
+    public GeoLocation getLocation() {
+        return loc;
+    }
+
+    @Override
+    public void setLocation(GeoLocation p) {
+        this.loc = new GeoLocationImp(p.x(), p.y(), p.z());
     }
 
     @Override
     public double getWeight() {
         return this.weight;
+    }
+
+    @Override
+    public void setWeight(double w) {
+        this.weight = w;
     }
 
     @Override
@@ -51,11 +64,12 @@ public class MyEdgeData implements api.EdgeData {
         this.tag = t;
     }
 
+
     @Override
     public String toString() {
-        return "MyEdgeData{" +
-                "src=" + src +
-                ", dst=" + dst +
+        return "MyNodeData{" +
+                "loc=" + loc +
+                ", key=" + key +
                 ", weight=" + weight +
                 ", info='" + info + '\'' +
                 ", tag=" + tag +

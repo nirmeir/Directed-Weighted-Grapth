@@ -3,6 +3,7 @@ import api.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -97,13 +98,16 @@ public class GUI extends JFrame implements ActionListener {
         MenuItem center = new MenuItem("Center");
         center.addActionListener(this);
 
-        MenuItem clear = new MenuItem("clear");
+        MenuItem tsp = new MenuItem("TSP");
+        tsp.addActionListener(this);
+
+        MenuItem clear = new MenuItem("Clear");
         clear.addActionListener(this);
 
-        MenuItem addNode = new MenuItem("add node");
+        MenuItem addNode = new MenuItem("Add Node");
         addNode.addActionListener(this);
 
-        MenuItem addEdge = new MenuItem("add edge");
+        MenuItem addEdge = new MenuItem("Add Edge");
         addEdge.addActionListener(this);
 
         menu.add(item1);
@@ -111,6 +115,7 @@ public class GUI extends JFrame implements ActionListener {
 
         algorithmsBar.add(shortestpath);
         algorithmsBar.add(center);
+        algorithmsBar.add(tsp);
         algorithmsBar.add(clear);
 
         addBar.add(addNode);
@@ -269,18 +274,38 @@ public class GUI extends JFrame implements ActionListener {
             nd.setInfo("Center");
             repaint();
         }
-        if(str.equals("clear")){
+        if(str.equals("TSP")){
+            TspScreen sc = new TspScreen(this);
+            sc.init();
+        }
+        if(str.equals("Clear")){
             this.clear();
         }
-        if(str.equals("add node")){
+        if(str.equals("Add Node")){
             AddScreen sc = new AddScreen(this, AddScreen.Mode.NODE);
             sc.init();
         }
-        if(str.equals("add edge")){
+        if(str.equals("Add Edge")){
             AddScreen sc = new AddScreen(this, AddScreen.Mode.EDGE);
             sc.init();
         }
 
+    }
+
+    public void tsp(int[] nodes){
+        this.clear();
+
+        List<NodeData> city = new ArrayList<>();
+
+        for (int i : nodes){
+            city.add(this.algo.getGraph().getNode(i));
+        }
+
+        List<NodeData> tspList = this.algo.tsp(city);
+
+        markPath(tspList);
+
+        repaint();
     }
 
     public void clear(){
@@ -301,9 +326,14 @@ public class GUI extends JFrame implements ActionListener {
 
     public void shortestPath(int src, int dst){
         this.clear();
-
         List<NodeData> shortest = algo.shortestPath(src,dst);
 
+        markPath(shortest);
+
+        repaint();
+    }
+
+    public void markPath(List<NodeData> shortest){
         for(int i = 0; i<shortest.size()-1; i++){
             NodeData nd = shortest.get(i);
             NodeData ndNext = shortest.get(i+1);
@@ -316,16 +346,14 @@ public class GUI extends JFrame implements ActionListener {
         NodeData nd = shortest.get(shortest.size()-1);
 
         nd.setInfo("In Path");
-
-        repaint();
     }
 
     public void addNode(double x, double y){
 
-        GeoLocation geo = new MyGeoLocation(x,y,0);
+        GeoLocation geo = new GeoLocationImp(x,y,0);
         int key = this.algo.getGraph().nodeSize();
 
-        NodeData nd = new MyNodeData(geo, key);
+        NodeData nd = new NodeDataImp(geo, key);
 
         this.algo.getGraph().addNode(nd);
 

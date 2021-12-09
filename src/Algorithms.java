@@ -8,18 +8,18 @@ import java.util.*;
 
 public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
-    private MyDirectedWeightedGraph graph;
+    private DirectedWeightedGraphImp graph;
 
     public Algorithms() {
     }
 
     public Algorithms(DirectedWeightedGraph g) {
-        this.graph = (MyDirectedWeightedGraph) g;
+        this.graph = (DirectedWeightedGraphImp) g;
     }
 
     @Override
     public void init(DirectedWeightedGraph g) {
-        this.graph = new MyDirectedWeightedGraph((MyDirectedWeightedGraph) g);
+        this.graph = new DirectedWeightedGraphImp((DirectedWeightedGraphImp) g);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public DirectedWeightedGraph copy() {
-        return new MyDirectedWeightedGraph(this.graph);
+        return new DirectedWeightedGraphImp(this.graph);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
             return false;
         }
 
-        MyDirectedWeightedGraph reverse = new MyDirectedWeightedGraph(); //reversing the graph
+        DirectedWeightedGraphImp reverse = new DirectedWeightedGraphImp(); //reversing the graph
         Iterator<NodeData> nodeIter = this.graph.nodeIter();
         while (nodeIter.hasNext()) { //adding the nodes
             reverse.addNode(nodeIter.next());
@@ -53,7 +53,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         return runDFS(this.graph) && runDFS(reverse);
     }
 
-    private boolean runDFS(MyDirectedWeightedGraph graph) {
+    private boolean runDFS(DirectedWeightedGraphImp graph) {
         Iterator<NodeData> iterator = graph.nodeIter();
         while (iterator.hasNext()) { //setting the tag of all nodes to be 0
             iterator.next().setTag(0);
@@ -73,7 +73,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         return true;
     }
 
-    private void DFS(NodeData x, MyDirectedWeightedGraph graph) {
+    private void DFS(NodeData x, DirectedWeightedGraphImp graph) {
         x.setTag(1);
         Stack<NodeData> stack = new Stack<>();
         stack.push(x);
@@ -114,7 +114,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         return path;
     }
 
-    public HashMap<NodeData[], Double> DijkstraAlgo(MyDirectedWeightedGraph graph, int src, int dest) {
+    public HashMap<NodeData[], Double> DijkstraAlgo(DirectedWeightedGraphImp graph, int src, int dest) {
 
         List<Integer> visit = new ArrayList<>();
         double[] dist = new double[graph.nodeSize()];
@@ -186,8 +186,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         if (cities.isEmpty()) { //if cities list is empty return null
             return null;
         }
-        Algorithms algo = new Algorithms(graph);
-        if(!algo.isConnected()){
+        if( !isConnected()){
             return null;
         }
         List<NodeData> salesman = new ArrayList<>();
@@ -209,13 +208,27 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         return salesman;
     }
 
+    public boolean checkCities(List<NodeData> cities){
+        for (int i = 0; i < cities.size(); i++) {
+            if (shortestPathDist(cities.get(0).getKey(),cities.get(i).getKey()) <= 0.0){
+                return false;
+            }
+        }
+        for (int i = 0; i < cities.size(); i++) {
+            if (shortestPathDist(cities.get(i).getKey(),cities.get(0).getKey()) <= 0.0){
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean save(String file) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
-        JsonSerializer<MyDirectedWeightedGraph> serializer = new JsonSerializer<MyDirectedWeightedGraph>() {
+        JsonSerializer<DirectedWeightedGraphImp> serializer = new JsonSerializer<DirectedWeightedGraphImp>() {
             @Override
-            public JsonElement serialize(MyDirectedWeightedGraph graph, Type type, JsonSerializationContext jsonSerializationContext) {
+            public JsonElement serialize(DirectedWeightedGraphImp graph, Type type, JsonSerializationContext jsonSerializationContext) {
                 JsonObject jsonGraph = new JsonObject();
                 jsonGraph.add("Edges", new JsonArray());
                 jsonGraph.add("Nodes", new JsonArray());
@@ -246,7 +259,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
                 return jsonGraph;
             }
         };
-        gsonBuilder.registerTypeAdapter(MyDirectedWeightedGraph.class, serializer);
+        gsonBuilder.registerTypeAdapter(DirectedWeightedGraphImp.class, serializer);
         Gson graphGson = gsonBuilder.create();
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(file));
@@ -275,19 +288,19 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
             GsonBuilder gsonBuilder = new GsonBuilder();
             // change serialization for specific types
-            JsonDeserializer<MyDirectedWeightedGraph> deserializer = new JsonDeserializer<MyDirectedWeightedGraph>() {
+            JsonDeserializer<DirectedWeightedGraphImp> deserializer = new JsonDeserializer<DirectedWeightedGraphImp>() {
                 @Override
-                public MyDirectedWeightedGraph deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                public DirectedWeightedGraphImp deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                     JsonObject jsonObject = json.getAsJsonObject();
-                    MyDirectedWeightedGraph graph = new MyDirectedWeightedGraph();
+                    DirectedWeightedGraphImp graph = new DirectedWeightedGraphImp();
                     JsonArray Edges = jsonObject.getAsJsonArray("Edges");
                     JsonArray Nodes = jsonObject.getAsJsonArray("Nodes");
                     Iterator<JsonElement> iterNodes = Nodes.iterator();
                     while (iterNodes.hasNext()) {
                         JsonElement node = iterNodes.next();
-                        graph.addNode(new MyNodeData(node.getAsJsonObject().get("id").getAsInt()));
+                        graph.addNode(new NodeDataImp(node.getAsJsonObject().get("id").getAsInt()));
                         String coordinates = node.getAsJsonObject().get("pos").getAsString();
-                        GeoLocation pos = new MyGeoLocation(coordinates);
+                        GeoLocation pos = new GeoLocationImp(coordinates);
                         graph.getNode(node.getAsJsonObject().get("id").getAsInt()).setLocation(pos);
                     }
 
@@ -305,9 +318,9 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
                 }
             };
 
-            gsonBuilder.registerTypeAdapter(MyDirectedWeightedGraph.class, deserializer);
+            gsonBuilder.registerTypeAdapter(DirectedWeightedGraphImp.class, deserializer);
             Gson graphGson = gsonBuilder.create();
-            this.graph = graphGson.fromJson(jsonString.toString(), MyDirectedWeightedGraph.class);
+            this.graph = graphGson.fromJson(jsonString.toString(), DirectedWeightedGraphImp.class);
             return true;
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
@@ -326,7 +339,7 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         int id = algo.center().getKey();
 
 
-        NodeData nd = new MyNodeData(algo.graph.getNode(0).getLocation(), algo.getGraph().nodeSize());
+        NodeData nd = new NodeDataImp(algo.graph.getNode(0).getLocation(), algo.getGraph().nodeSize());
         algo.getGraph().addNode(nd);
 
         System.out.println(algo.isConnected());

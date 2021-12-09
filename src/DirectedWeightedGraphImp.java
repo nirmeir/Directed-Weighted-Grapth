@@ -1,12 +1,10 @@
-import api.DirectedWeightedGraph;
 import api.EdgeData;
 import api.NodeData;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 
-public class MyDirectedWeightedGraph implements api.DirectedWeightedGraph {
+public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
 
     HashMap<String, EdgeData> edges;
     HashMap<Integer, NodeData> nodes;
@@ -15,14 +13,14 @@ public class MyDirectedWeightedGraph implements api.DirectedWeightedGraph {
 
     static final char edgeSpaceKey = '_';
 
-    public MyDirectedWeightedGraph(){
+    public DirectedWeightedGraphImp(){
         this.edges = new HashMap<String, EdgeData>();
         this.nodes = new HashMap<Integer, NodeData>();
         this.edgePerNode = new HashMap<Integer, edgeForNode>();
         this.mc = 0;
     }
 
-    public MyDirectedWeightedGraph (MyDirectedWeightedGraph g){
+    public DirectedWeightedGraphImp(DirectedWeightedGraphImp g){
         this.edges = new HashMap<String, EdgeData>();
         this.nodes = new HashMap<Integer, NodeData>();
         this.edgePerNode = new HashMap<Integer, edgeForNode>();
@@ -65,7 +63,7 @@ public class MyDirectedWeightedGraph implements api.DirectedWeightedGraph {
 
     @Override
     public void connect(int src, int dest, double w) {
-        EdgeData edge = new MyEdgeData(src, w, dest);
+        EdgeData edge = new EdgeDataImp(src, w, dest);
         String key = Integer.toString(src) + edgeSpaceKey + Integer.toString(dest);
         this.edges.put(key,edge);
 

@@ -13,11 +13,13 @@ public class Ex2 {
      * @return
      */
     public static DirectedWeightedGraph getGrapg(String json_file) {
-        DirectedWeightedGraph ans = null;
+        DirectedWeightedGraph ans = new DirectedWeightedGraphImp();
         // ****** Add your code here ******
-        //
+        Algorithms algo = new Algorithms();
+        algo.init(ans);
+        algo.load(json_file);
         // ********************************
-        return ans;
+        return algo.getGraph();
     }
     /**
      * This static function will be used to test your implementation
@@ -25,12 +27,11 @@ public class Ex2 {
      * @return
      */
     public static DirectedWeightedGraphAlgorithms getGrapgAlgo(String json_file) throws IOException {
-        DirectedWeightedGraphAlgorithms ans = null;
-
+        DirectedWeightedGraphAlgorithms ans = new Algorithms();
         // ****** Add your code here ******
-        ans = new Algorithms();
+        DirectedWeightedGraph graph = new DirectedWeightedGraphImp();
+        ans.init(graph);
         ans.load(json_file);
-
         // ********************************
         return ans;
     }
@@ -49,6 +50,8 @@ public class Ex2 {
     }
 
     public static void main(String[] args) throws IOException {
+
+
         runGUI("./data/G1.json");
 
 //        LoadScreen sc = new LoadScreen();
