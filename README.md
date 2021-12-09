@@ -60,7 +60,7 @@ After you have downloaded the files neccessary (Ex2.jar, /data), open a terminal
 - *id* : the ID of the node.
 
 ### Example of the graph in G1.json :
-![]()
+![](https://i.imgur.com/yZtvaeh.png)
 
 
 
