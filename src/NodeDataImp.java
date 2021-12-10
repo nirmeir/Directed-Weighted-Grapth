@@ -70,9 +70,6 @@ public class NodeDataImp implements api.NodeData {
         return "MyNodeData{" +
                 "loc=" + loc +
                 ", key=" + key +
-                ", weight=" + weight +
-                ", info='" + info + '\'' +
-                ", tag=" + tag +
                 '}';
     }
 }

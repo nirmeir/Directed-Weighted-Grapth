@@ -14,19 +14,19 @@ class AlgorithmsTest {
     void init() {
         DirectedWeightedGraphImp graph = new DirectedWeightedGraphImp();
         Algorithms algo = new Algorithms();
-        GeoLocation p1 = new GeoLocationImp(1,1,0);
-        GeoLocation p2 = new GeoLocationImp(4,2,0);
-        GeoLocation p3 = new GeoLocationImp(7,10,0);
-        NodeData n1 = new NodeDataImp(p1,1);
-        NodeData n2 = new NodeDataImp(p2,2);
-        NodeData n3 = new NodeDataImp(p3,3);
+        GeoLocation p1 = new GeoLocationImp(1, 1, 0);
+        GeoLocation p2 = new GeoLocationImp(4, 2, 0);
+        GeoLocation p3 = new GeoLocationImp(7, 10, 0);
+        NodeData n1 = new NodeDataImp(p1, 1);
+        NodeData n2 = new NodeDataImp(p2, 2);
+        NodeData n3 = new NodeDataImp(p3, 3);
         graph.addNode(n1);
         graph.addNode(n2);
         graph.addNode(n3);
-        graph.connect(1,2,3);
-        graph.connect(2,3,4);
-        graph.connect(1,3,5);
-        graph.connect(2,1,6);
+        graph.connect(1, 2, 3);
+        graph.connect(2, 3, 4);
+        graph.connect(1, 3, 5);
+        graph.connect(2, 1, 6);
         algo.init(graph);
         System.out.println(algo.getGraph());
     }
@@ -47,7 +47,7 @@ class AlgorithmsTest {
         algo.init(graph);
         algo.load(".\\data\\G1.json");
         DirectedWeightedGraph copy = algo.copy();
-        assertNotEquals(copy,algo.getGraph());
+        assertNotEquals(copy, algo.getGraph());
     }
 
     @Test
@@ -69,8 +69,8 @@ class AlgorithmsTest {
         Algorithms algo = new Algorithms();
         algo.init(graph);
         algo.load(".\\data\\G1.json");
-        assertEquals(10.52002088011531,algo.shortestPathDist(1,11));
-        assertEquals(0.0,algo.shortestPathDist(1,1));
+        assertEquals(10.52002088011531, algo.shortestPathDist(1, 11));
+        assertEquals(0.0, algo.shortestPathDist(1, 1));
     }
 
     @Test
@@ -86,12 +86,12 @@ class AlgorithmsTest {
         list1.add(algo.getGraph().getNode(7));
         list1.add(algo.getGraph().getNode(8));
         list1.add(algo.getGraph().getNode(9));
-        assertEquals(list1,algo.shortestPath(3,9));
-        assertNull(algo.shortestPath(5,5));
+        assertEquals(list1, algo.shortestPath(3, 9));
+        assertNull(algo.shortestPath(5, 5));
         List<NodeData> list2 = new ArrayList<>();
         list2.add(algo.getGraph().getNode(3));
         list2.add(algo.getGraph().getNode(4));
-        assertEquals(list2,algo.shortestPath(3,4));
+        assertEquals(list2, algo.shortestPath(3, 4));
     }
 
     @Test
@@ -100,17 +100,17 @@ class AlgorithmsTest {
         Algorithms algo = new Algorithms();
         algo.init(graph);
         algo.load(".\\data\\G1.json");
-        assertEquals(8,algo.center().getKey());
+        assertEquals(8, algo.center().getKey());
         algo.load(".\\data\\G2.json");
-        assertEquals(0,algo.center().getKey());
+        assertEquals(0, algo.center().getKey());
         algo.load(".\\data\\G3.json");
-        assertEquals(40,algo.center().getKey());
+        assertEquals(40, algo.center().getKey());
         algo.load(".\\data\\G4.json");
-        assertEquals(2,algo.center().getKey());
+        assertEquals(2, algo.center().getKey());
         algo.load(".\\data\\G5.json");
-        assertEquals(6,algo.center().getKey());
+        assertEquals(6, algo.center().getKey());
         algo.load(".\\data\\G6.json");
-        assertEquals(7,algo.center().getKey());
+        assertEquals(7, algo.center().getKey());
     }
 
     @Test
@@ -133,7 +133,7 @@ class AlgorithmsTest {
         tsp1.add(algo.getGraph().getNode(5));
         tsp1.add(algo.getGraph().getNode(6));
         tsp1.add(algo.getGraph().getNode(7));
-        assertEquals(tsp1,algo.tsp(city1));
+        assertEquals(tsp1, algo.tsp(city1));
 
         assertNull(algo.tsp(null));
         assertNull(algo.tsp(new ArrayList<>()));
@@ -157,7 +157,7 @@ class AlgorithmsTest {
         tsp2.add(algo.getGraph().getNode(16));
         tsp2.add(algo.getGraph().getNode(0));
         tsp2.add(algo.getGraph().getNode(21));
-        assertEquals(tsp2,algo.tsp(city2));
+        assertEquals(tsp2, algo.tsp(city2));
     }
 
     @Test
@@ -165,19 +165,19 @@ class AlgorithmsTest {
         DirectedWeightedGraphImp graph = new DirectedWeightedGraphImp();
         Algorithms algo = new Algorithms();
         algo.init(graph);
-        GeoLocation p1 = new GeoLocationImp(1,1,0);
-        GeoLocation p2 = new GeoLocationImp(4,2,0);
-        GeoLocation p3 = new GeoLocationImp(7,10,0);
-        NodeData n1 = new NodeDataImp(p1,1);
-        NodeData n2 = new NodeDataImp(p2,2);
-        NodeData n3 = new NodeDataImp(p3,3);
+        GeoLocation p1 = new GeoLocationImp(1, 1, 0);
+        GeoLocation p2 = new GeoLocationImp(4, 2, 0);
+        GeoLocation p3 = new GeoLocationImp(7, 10, 0);
+        NodeData n1 = new NodeDataImp(p1, 1);
+        NodeData n2 = new NodeDataImp(p2, 2);
+        NodeData n3 = new NodeDataImp(p3, 3);
         algo.getGraph().addNode(n1);
         algo.getGraph().addNode(n2);
         algo.getGraph().addNode(n3);
-        algo.getGraph().connect(1,2,3);
-        algo.getGraph().connect(2,3,4);
-        algo.getGraph().connect(1,3,5);
-        algo.getGraph().connect(2,1,6);
+        algo.getGraph().connect(1, 2, 3);
+        algo.getGraph().connect(2, 3, 4);
+        algo.getGraph().connect(1, 3, 5);
+        algo.getGraph().connect(2, 1, 6);
         algo.save("save.json");
     }
 

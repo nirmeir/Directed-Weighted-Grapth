@@ -92,6 +92,9 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
 
     @Override
     public double shortestPathDist(int src, int dest) {
+        if (src == dest){
+            return 0.0;
+        }
         HashMap<NodeData[], Double> res = DijkstraAlgo(this.graph, src, dest);
         Map.Entry<NodeData[], Double> entry = res.entrySet().iterator().next();
         return entry.getValue();
@@ -118,7 +121,6 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
     }
 
     public HashMap<NodeData[], Double> DijkstraAlgo(DirectedWeightedGraphImp graph, int src, int dest) {
-
         List<Integer> visit = new ArrayList<>();
         double[] dist = new double[graph.nodeSize()];
         NodeData[] prev = new NodeData[graph.nodeSize()];
@@ -335,31 +337,5 @@ public class Algorithms implements DirectedWeightedGraphAlgorithms {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        Algorithms algo = new Algorithms();
-        algo.load(".\\data\\G1.json");
-        double key = algo.shortestPathDist(15, 6);
-        int id = algo.center().getKey();
-
-
-        NodeData nd = new NodeDataImp(algo.graph.getNode(0).getLocation(), algo.getGraph().nodeSize());
-        algo.getGraph().addNode(nd);
-
-        System.out.println(algo.isConnected());
-/*        List<NodeData> arr = new ArrayList<>();
-        arr.add(algo.graph.getNode(0));
-        arr.add(algo.graph.getNode(1));
-        arr.add(algo.graph.getNode(2));
-        arr.add(algo.graph.getNode(3));
-        arr.add(algo.graph.getNode(4));
-        arr.add(algo.graph.getNode(6));
-
-        List<NodeData> a = algo.tsp(arr);*/
-
-        System.out.println(key);
-        System.out.println(id);
-        //System.out.println(a.toString());
-        //algo.save("G4.json");
-    }
 }
 

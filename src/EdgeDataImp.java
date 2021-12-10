@@ -55,8 +55,6 @@ public class EdgeDataImp implements api.EdgeData {
                 "src=" + src +
                 ", dst=" + dst +
                 ", weight=" + weight +
-                ", info='" + info + '\'' +
-                ", tag=" + tag +
                 '}';
     }
 }

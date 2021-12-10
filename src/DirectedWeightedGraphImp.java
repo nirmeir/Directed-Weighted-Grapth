@@ -13,28 +13,28 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
 
     static final char edgeSpaceKey = '_';
 
-    public DirectedWeightedGraphImp(){
+    public DirectedWeightedGraphImp() {
         this.edges = new HashMap<String, EdgeData>();
         this.nodes = new HashMap<Integer, NodeData>();
         this.edgePerNode = new HashMap<Integer, edgeForNode>();
         this.mc = 0;
     }
 
-    public DirectedWeightedGraphImp(DirectedWeightedGraphImp g){
+    public DirectedWeightedGraphImp(DirectedWeightedGraphImp g) {
         this.edges = new HashMap<String, EdgeData>();
         this.nodes = new HashMap<Integer, NodeData>();
         this.edgePerNode = new HashMap<Integer, edgeForNode>();
 
 
         Iterator<NodeData> t1 = this.nodeIter();
-        while(t1.hasNext()){
-            this.addNode( t1.next());
+        while (t1.hasNext()) {
+            this.addNode(t1.next());
         }
 
-        Iterator<EdgeData> t2=this.edgeIter();
-        while (t2.hasNext()){
+        Iterator<EdgeData> t2 = this.edgeIter();
+        while (t2.hasNext()) {
             EdgeData ed = t2.next();
-            this.connect(ed.getSrc(),ed.getDest(),ed.getWeight());
+            this.connect(ed.getSrc(), ed.getDest(), ed.getWeight());
         }
 
         this.mc = g.mc;
@@ -42,20 +42,29 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
 
     @Override
     public NodeData getNode(int key) {
+        if (!nodes.containsKey(key)) {
+            System.out.println("Key doesn't exist in the graph");
+            return null;
+        }
         return this.nodes.get(key);
     }
 
     @Override
     public EdgeData getEdge(int src, int dest) {
+        if (!nodes.containsKey(src) || !nodes.containsKey(dest)) {
+            return null;
+        }
         String key = Integer.toString(src) + edgeSpaceKey + Integer.toString(dest);
-
+        if (!edges.containsKey(key)) {
+            return null;
+        }
         return this.edges.get(key);
     }
 
     @Override
     public void addNode(NodeData n) {
         int key = n.getKey();
-        this.nodes.put(key,n);
+        this.nodes.put(key, n);
         this.edgePerNode.put(n.getKey(), new edgeForNode());
 
         mc++;
@@ -63,64 +72,71 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
 
     @Override
     public void connect(int src, int dest, double w) {
+        if (!nodes.containsKey(src) || !nodes.containsKey(dest)) {
+            return;
+        }
         EdgeData edge = new EdgeDataImp(src, w, dest);
         String key = Integer.toString(src) + edgeSpaceKey + Integer.toString(dest);
-        this.edges.put(key,edge);
+        this.edges.put(key, edge);
 
         // add edge to nodes - if from then edgeForNode.src else edgeForNode.dst
-        this.edgePerNode.get(src).src.put(dest,edge); // added to src node
-        this.edgePerNode.get(dest).dst.put(src,edge); //added to dst node
+        this.edgePerNode.get(src).src.put(dest, edge); // added to src node
+        this.edgePerNode.get(dest).dst.put(src, edge); //added to dst node
 
         mc++;
     }
 
     @Override
     public Iterator<NodeData> nodeIter() {
-        Iterator t = this.nodes.values().iterator();
-        return t;
+        return this.nodes.values().iterator();
     }
 
     @Override
     public Iterator<EdgeData> edgeIter() {
-        Iterator t = this.edges.values().iterator();
-        return t;
+        return this.edges.values().iterator();
     }
 
     @Override
     public Iterator<EdgeData> edgeIter(int node_id) {
+        if (!nodes.containsKey(node_id)) {
+            System.out.println("Key doesn't exist in the graph");
+            return null;
+        }
         return this.edgePerNode.get(node_id).src.values().iterator();
     }
 
     @Override
     public NodeData removeNode(int key) {
+        if (!nodes.containsKey(key)) {
+            System.out.println("Key doesn't exist in the graph");
+            return null;
+        }
         NodeData nd = this.nodes.get(key);
         this.nodes.remove(key);
-
-        if(nd == null) return null;
+        if (nd == null) return null;
 
         Iterator<EdgeData> iter = this.edgeIter(key);
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             EdgeData e = iter.next();
             this.edges.remove(e); // removing from edges
             this.edgePerNode.get(e.getDest()).dst.remove(key); // removing from edgeForNode in dst position.
         }
-
         iter = this.edgePerNode.get(key).dst.values().iterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             EdgeData e = iter.next();
             this.edges.remove(e); // removing from edges
             this.edgePerNode.get(e.getSrc()).src.remove(key); // removing from edgeForNode in src position.
         }
-
         this.edgePerNode.remove(key);
-
         mc++;
-
         return nd;
     }
 
     @Override
     public EdgeData removeEdge(int src, int dest) {
+        if (!nodes.containsKey(src) || !nodes.containsKey(dest) || getEdge(src, dest) == null) {
+            return null;
+        }
         String key = Integer.toString(src) + edgeSpaceKey + Integer.toString(dest);
         EdgeData ed = this.edges.get(key);
         this.edges.remove(ed);
@@ -148,12 +164,13 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
         return this.mc;
     }
 
-    private class edgeForNode{
-        public HashMap <Integer,  EdgeData> src; // I'm the src
-        public HashMap <Integer,  EdgeData> dst; // I'm the dest
+    private class edgeForNode {
+        public HashMap<Integer, EdgeData> src; // I'm the src
+        public HashMap<Integer, EdgeData> dst; // I'm the dest
+
         public edgeForNode() {
-            this.src = new HashMap<Integer,  EdgeData>();
-            this.dst = new HashMap<Integer,  EdgeData>();
+            this.src = new HashMap<Integer, EdgeData>();
+            this.dst = new HashMap<Integer, EdgeData>();
         }
     }
 
@@ -162,7 +179,6 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
         return "DirectedWeightedGraphImp{" +
                 "edges=" + edges +
                 ", nodes=" + nodes +
-                ", edgePerNode=" + edgePerNode +
                 ", mc=" + mc +
                 '}';
     }
