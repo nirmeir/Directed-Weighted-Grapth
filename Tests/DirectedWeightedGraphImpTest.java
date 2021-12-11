@@ -138,11 +138,9 @@ class DirectedWeightedGraphImpTest {
         graph.addNode(n1);
         graph.addNode(n2);
         graph.addNode(n3);
-        Iterator<NodeData> nodeIter = graph.nodeIter();
-        while(nodeIter.hasNext()) {
-            System.out.println(nodeIter.next());
-        }
-        //graph.removeNode(n1.getKey()); //problem
+        assertEquals(3,graph.nodeSize());
+        graph.removeNode(n1.getKey());
+        assertEquals(2,graph.nodeSize());
         assertNull(graph.removeNode(5));
     }
 
@@ -161,15 +159,10 @@ class DirectedWeightedGraphImpTest {
         graph.connect(1, 2, 3);
         graph.connect(2, 3, 4);
         graph.connect(1, 3, 5);
-        Iterator<EdgeData> edgeIter1 = graph.edgeIter();
-        while(edgeIter1.hasNext()){
-            System.out.println(edgeIter1.next());
-        }
+        assertEquals(3,graph.edgeSize());
         graph.removeEdge(1,2);
-        Iterator<EdgeData> edgeIter2 = graph.edgeIter();
-        while(edgeIter2.hasNext()){
-            System.out.println(edgeIter2.next());
-        }
+        assertEquals(2,graph.edgeSize());
+
     }
 
     @Test

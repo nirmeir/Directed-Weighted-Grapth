@@ -14,7 +14,7 @@ public class GUI extends JFrame implements ActionListener {
 
     private int curveScale = 45;
 
-    HashMap<Integer, Boolean> checkEdge = new HashMap<Integer, Boolean>();
+    HashMap<String, Boolean> checkEdge = new HashMap<String, Boolean>();
 
     private double xMin, xMax, yMin, yMax;
     private DirectedWeightedGraphAlgorithms algo;
@@ -183,10 +183,12 @@ public class GUI extends JFrame implements ActionListener {
             int width = ((int) posSrc.getWidth() + (int) posDst.getWidth()) / 2;
             int height = ((int) posSrc.getHeight() + (int) posDst.getHeight()) / 2;
 
-            int check = src.getKey() * this.algo.getGraph().nodeSize() + dst.getKey() * this.algo.getGraph().nodeSize();
+            //double check = src.getKey() *  dst.getKey() * this.algo.getGraph().nodeSize();
+            String check = src.getKey() + "_" + dst.getKey();
+            String revCheck = dst.getKey() + "_" + src.getKey();
             QuadCurve2D.Double curve;
 
-            if (checkEdge.get(check) == null) {
+            if (checkEdge.get(check) == null && checkEdge.get(revCheck) == null) {
 
                 checkEdge.put(check, true);
 
@@ -202,8 +204,6 @@ public class GUI extends JFrame implements ActionListener {
 
                 curve = new QuadCurve2D.Double((int) posSrc.getWidth(), (int) posSrc.getHeight(), width, height, (int) posDst.getWidth(), (int) posDst.getHeight());
                 ((Graphics2D) g).draw(curve);
-
-
             }
 
             g.setColor(new Color(0, 0, 0));
@@ -227,8 +227,6 @@ public class GUI extends JFrame implements ActionListener {
             g.drawString(sValue + " , " + ed.getSrc() + "->" + ed.getDest(), width , (int)y);
 
         }
-
-
     }
 
     public void paint(Graphics g) {
