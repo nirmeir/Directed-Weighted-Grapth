@@ -82,8 +82,8 @@ public class GUI extends JFrame implements ActionListener {
         menuBar.add(menu);
         Menu algorithmsBar = new Menu("Algorithm");
         menuBar.add(algorithmsBar);
-        Menu addBar = new Menu("Add");
-        menuBar.add(addBar);
+        Menu graphBar = new Menu("Graph");
+        menuBar.add(graphBar);
         this.setMenuBar(menuBar);
 
         MenuItem item1 = new MenuItem("Load");
@@ -110,6 +110,12 @@ public class GUI extends JFrame implements ActionListener {
         MenuItem addEdge = new MenuItem("Add Edge");
         addEdge.addActionListener(this);
 
+        MenuItem delNode = new MenuItem("Delete Node");
+        delNode.addActionListener(this);
+
+        MenuItem delEdge = new MenuItem("Delete Edge");
+        delEdge.addActionListener(this);
+
         menu.add(item1);
         menu.add(item2);
 
@@ -118,9 +124,10 @@ public class GUI extends JFrame implements ActionListener {
         algorithmsBar.add(tsp);
         algorithmsBar.add(clear);
 
-        addBar.add(addNode);
-        addBar.add(addEdge);
-
+        graphBar.add(addNode);
+        graphBar.add(addEdge);
+        graphBar.add(delNode);
+        graphBar.add(delEdge);
 
 
     }
@@ -289,6 +296,14 @@ public class GUI extends JFrame implements ActionListener {
             AddScreen sc = new AddScreen(this, AddScreen.Mode.EDGE);
             sc.init();
         }
+        if(str.equals("Delete Node")){
+            RemoveScreen sc = new RemoveScreen(this, RemoveScreen.Mode.NODE);
+            sc.init();
+        }
+        if(str.equals("Delete Edge")){
+            RemoveScreen sc = new RemoveScreen(this, RemoveScreen.Mode.EDGE);
+            sc.init();
+        }
 
     }
 
@@ -365,6 +380,16 @@ public class GUI extends JFrame implements ActionListener {
 
     public void addEdge(int src, int dst, double weight){
         this.algo.getGraph().connect(src, dst, weight);
+        repaint();
+    }
+
+    public void removeNode(int key){
+        this.algo.getGraph().removeNode(key);
+        repaint();
+    }
+
+    public void removeEdge(int src, int dst){
+        this.algo.getGraph().removeEdge(src, dst);
         repaint();
     }
 

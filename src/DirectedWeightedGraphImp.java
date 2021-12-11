@@ -112,22 +112,22 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
             return null;
         }
         NodeData nd = this.nodes.get(key);
-        this.nodes.remove(key);
         if (nd == null) return null;
 
         Iterator<EdgeData> iter = this.edgeIter(key);
         while (iter.hasNext()) {
             EdgeData e = iter.next();
-            this.edges.remove(e); // removing from edges
-            this.edgePerNode.get(e.getDest()).dst.remove(key); // removing from edgeForNode in dst position.
+            this.removeEdge(e.getSrc(), e.getDest()); // removing from edges
+//            this.edgePerNode.get(e.getDest()).dst.remove(key); // removing from edgeForNode in dst position.
         }
         iter = this.edgePerNode.get(key).dst.values().iterator();
         while (iter.hasNext()) {
             EdgeData e = iter.next();
-            this.edges.remove(e); // removing from edges
-            this.edgePerNode.get(e.getSrc()).src.remove(key); // removing from edgeForNode in src position.
+            this.removeEdge(e.getSrc(), e.getDest()); // removing from edges
+//            this.edgePerNode.get(e.getSrc()).src.remove(key); // removing from edgeForNode in src position.
         }
         this.edgePerNode.remove(key);
+        this.nodes.remove(key);
         mc++;
         return nd;
     }
@@ -139,7 +139,7 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
         }
         String key = Integer.toString(src) + edgeSpaceKey + Integer.toString(dest);
         EdgeData ed = this.edges.get(key);
-        this.edges.remove(ed);
+        this.edges.remove(key);
 
         this.edgePerNode.get(src).src.remove(dest);
         this.edgePerNode.get(dest).dst.remove(dest);
