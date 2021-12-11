@@ -168,7 +168,7 @@ class DirectedWeightedGraphImpTest {
         graph.removeEdge(1,2);
         Iterator<EdgeData> edgeIter2 = graph.edgeIter();
         while(edgeIter2.hasNext()){
-            System.out.println(edgeIter2.next()); //problem here
+            System.out.println(edgeIter2.next());
         }
     }
 

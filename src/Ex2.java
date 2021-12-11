@@ -54,12 +54,7 @@ public class Ex2 {
     }
 
     public static void main(String[] args) throws IOException {
-
-
-        runGUI("./data/G1.json");
-
-//        LoadScreen sc = new LoadScreen();
-//        sc.init();
+        runGUI(".\\data\\" + args[0]);
 
     }
 }
