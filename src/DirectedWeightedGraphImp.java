@@ -88,12 +88,12 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
 
     @Override
     public Iterator<NodeData> nodeIter() {
-        return this.nodes.values().iterator();
+        return new NodeIterator();
     }
 
     @Override
     public Iterator<EdgeData> edgeIter() {
-        return this.edges.values().iterator();
+        return new EdgeIterator();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
             System.out.println("Key doesn't exist in the graph");
             return null;
         }
-        return this.edgePerNode.get(node_id).src.values().iterator();
+        return new EdgeIteratorPerNode(node_id);
     }
 
     @Override
@@ -117,7 +117,11 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
         Iterator<EdgeData> iter = this.edgeIter(key);
         while (iter.hasNext()) {
             EdgeData e = iter.next();
-            this.removeEdge(e.getSrc(), e.getDest()); // removing from edges
+            String curKey = Integer.toString(e.getSrc()) + edgeSpaceKey + Integer.toString(e.getDest());
+
+            this.edges.remove(curKey);
+            this.edgePerNode.get(e.getDest()).dst.remove(e.getSrc());
+
 //            this.edgePerNode.get(e.getDest()).dst.remove(key); // removing from edgeForNode in dst position.
         }
         iter = this.edgePerNode.get(key).dst.values().iterator();
@@ -182,4 +186,106 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
                 ", mc=" + mc +
                 '}';
     }
+
+    private class EdgeIterator implements Iterator<EdgeData> {
+        private Iterator<EdgeData> iterator;
+        private EdgeData posEdge;
+        private int compareMC; // compare between our MC to the main class graph MC
+        public EdgeIterator() {
+            this.compareMC = mc;
+            this.iterator = edges.values().iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            isOK();
+            return this.iterator.hasNext();
+        }
+        @Override
+        public EdgeData next() {
+            isOK();
+            this.posEdge = this.iterator.next();
+            return this.posEdge;
+        }
+        @Override
+        public void remove() {
+            isOK();
+            this.compareMC++;
+            this.iterator.remove();
+            removeEdge(this.posEdge.getSrc(), this.posEdge.getDest());
+        }
+        private void isOK() {
+            if (this.compareMC != mc) {
+                throw new RuntimeException("Can't continue, the graph has been changed");
+            }
+        }
+    }
+    private class EdgeIteratorPerNode implements Iterator<EdgeData> {
+        private Iterator<EdgeData> iterator;
+        private EdgeData posEdge;
+        private int compareMC; // compare between our MC to the main class graph MC
+        public EdgeIteratorPerNode(int node_id) {
+            this.compareMC = mc;
+            this.iterator = edgePerNode.get(node_id).src.values().iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            isOK();
+            return this.iterator.hasNext();
+        }
+        @Override
+        public EdgeData next() {
+            isOK();
+            this.posEdge = this.iterator.next();
+            return this.posEdge;
+        }
+        @Override
+        public void remove() {
+            isOK();
+            this.compareMC++;
+            this.iterator.remove();
+            removeEdge(this.posEdge.getSrc(), this.posEdge.getDest());
+
+        }
+
+        private void isOK() {
+            if (this.compareMC != mc) {
+                throw new RuntimeException("Can't continue, the graph has been changed");
+            }
+        }
+    }
+    private class NodeIterator implements Iterator<NodeData> {
+        private Iterator<NodeData> iterator;
+        private NodeData posNode;
+        private int compareMC; // compare between our MC to the main class graph MC
+        public NodeIterator() {
+            this.compareMC = mc;
+            this.iterator = nodes.values().iterator();
+        }
+        @Override
+        public boolean hasNext() {
+            isOK();
+            return this.iterator.hasNext();
+        }
+        @Override
+        public NodeData next() {
+            isOK();
+            this.posNode = this.iterator.next();
+            return this.posNode;
+        }
+        @Override
+        public void remove() {
+            isOK();
+            this.compareMC++;
+            this.iterator.remove();
+            removeNode(this.posNode.getKey());
+        }
+        private void isOK() {
+            if (compareMC != mc) { // if this mc is not equal to main mc than we made something to the main graph and we need a new iterator
+                throw new RuntimeException("Can't continue, the graph has been changed");
+            }
+        }
+    }
+
 }

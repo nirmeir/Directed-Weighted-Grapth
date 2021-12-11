@@ -134,6 +134,7 @@ public class GUI extends JFrame implements ActionListener {
 
     @Override
     public void paintComponents(Graphics g) {
+
         Iterator<NodeData> t = this.algo.getGraph().nodeIter();
         while (t.hasNext()) {
             boolean special = false;
