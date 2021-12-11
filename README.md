@@ -86,6 +86,6 @@ To run this project, download th EX2.jar and /data folder, and place them in the
 
 ## UML
 
-![]()
+![](https://i.imgur.com/xlBFwP7.png)
 
 Link to the main assignment: https://github.com/benmoshe/OOP_2021/tree/main/Assignments/Ex2.
