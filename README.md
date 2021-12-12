@@ -44,12 +44,9 @@ the json files are based on Gson version 2.8.6.
 
 To run this project, download th EX2.jar and /data folder, and place them in the same folder.
 
-- *Option 1* : Run from Graphics.GUI After you have downloaded the files neccessary (Ex2.jar, /data) run Ex2.jar, enter a path to
-  a json file in the loading screen. Select to run an algorithm from the menu. You can also choose to load or save a new
-  json file from the menu.
-- *Option 2* : run form CLI After you have downloaded the files neccessary (Ex2.jar, /data), open a terminal at the
+- Run from CLI After you have downloaded the files neccessary (Ex2.jar, /data), open a terminal at the
   current folder, and type:
-  `java -jar Ex2.jar G1.json `, or any json file.
+  `java -jar Ex2.jar <path\G1.json>`, or any json file.
 
 ## Input/Output Examples
 
