@@ -1,6 +1,6 @@
 # Directed Weighted Graph
 
-**Created by Eldad Tsemach and Ilan Sirisky**
+**Created by Eldad Tsemach, Ilan Sirisky and Nir Meir **
 
 This project is a part of our Object Oriented Programming course in Java. The above project deals with the
 implementation of a Directed Weighted graph, using Nodes and Edges. As well as implementing a number of algorithms on
@@ -28,12 +28,12 @@ Example of the algorithm:
 
 ## Code Description
 
-- `GeoLocation.java` and `NodeData.java` : Implements and represents the vertices of the graph.
-- `EdgeData.java`: Implements and represents the edges of the graph.
-- `WeightedDirectedGraph.java`: Implements the graph itself, by using 2 hashmaps one for NodeData and the other for
+- `GeoLocationImp.java` and `NodeDataImp.java` : Implements and represents the vertices of the graph.
+- `EdgeDataImp.java`: Implements and represents the edges of the graph.
+- `WeightedDirectedGraphImp.java`: Implements the graph itself, by using 2 hashmaps one for NodeData and the other for
   EdgeData.
-- `api.Algorithms.java`: Implements all the algorithms that are listed above.
-- `Graphics.GUI` and `Graphics.LoadScreen`: are part of the Graphics.GUI.
+- `Algorithms.java`: Implements all the algorithms that are listed above.
+- `GUI.java`, `LoadScreen.java`, `AddScreen.java`, `RemoveScreen.java`, `ShortPathScreen.java` and `TspScreen.java`: are all part of the GUI.
 
 ## Dependencies
 
