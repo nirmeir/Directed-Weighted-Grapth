@@ -1,5 +1,4 @@
-import api.EdgeData;
-import api.NodeData;
+package api;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -180,7 +179,7 @@ public class DirectedWeightedGraphImp implements api.DirectedWeightedGraph {
 
     @Override
     public String toString() {
-        return "DirectedWeightedGraphImp{" +
+        return "api.DirectedWeightedGraphImp{" +
                 "edges=" + edges +
                 ", nodes=" + nodes +
                 ", mc=" + mc +

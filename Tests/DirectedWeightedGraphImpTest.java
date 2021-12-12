@@ -1,7 +1,4 @@
-import api.DirectedWeightedGraph;
-import api.EdgeData;
-import api.GeoLocation;
-import api.NodeData;
+import api.*;
 import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 import static org.junit.jupiter.api.Assertions.*;

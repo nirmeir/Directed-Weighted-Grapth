@@ -1,4 +1,4 @@
-import api.GeoLocation;
+package api;
 
 public class NodeDataImp implements api.NodeData {
     GeoLocation loc;

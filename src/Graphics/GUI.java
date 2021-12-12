@@ -1,3 +1,5 @@
+package Graphics;
+
 import api.*;
 
 import java.awt.*;

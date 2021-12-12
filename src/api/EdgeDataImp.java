@@ -1,3 +1,5 @@
+package api;
+
 public class EdgeDataImp implements api.EdgeData {
 
     int src;

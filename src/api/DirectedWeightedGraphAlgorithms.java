@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 /**
- * This interface represents a Directed (positive) Weighted Graph Theory Algorithms including:
+ * This interface represents a Directed (positive) Weighted Graph Theory api.Algorithms including:
  * 0. clone(); (copy)
  * 1. init(graph);
  * 2. isConnected(); // strongly (all ordered pais connected)

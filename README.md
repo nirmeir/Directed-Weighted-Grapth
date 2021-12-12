@@ -32,8 +32,8 @@ Example of the algorithm:
 - `EdgeData.java`: Implements and represents the edges of the graph.
 - `WeightedDirectedGraph.java`: Implements the graph itself, by using 2 hashmaps one for NodeData and the other for
   EdgeData.
-- `Algorithms.java`: Implements all the algorithms that are listed above.
-- `GUI` and `LoadScreen`: are part of the GUI.
+- `api.Algorithms.java`: Implements all the algorithms that are listed above.
+- `Graphics.GUI` and `Graphics.LoadScreen`: are part of the Graphics.GUI.
 
 ## Dependencies
 
@@ -44,7 +44,7 @@ the json files are based on Gson version 2.8.6.
 
 To run this project, download th EX2.jar and /data folder, and place them in the same folder.
 
-- *Option 1* : Run from GUI After you have downloaded the files neccessary (Ex2.jar, /data) run Ex2.jar, enter a path to
+- *Option 1* : Run from Graphics.GUI After you have downloaded the files neccessary (Ex2.jar, /data) run Ex2.jar, enter a path to
   a json file in the loading screen. Select to run an algorithm from the menu. You can also choose to load or save a new
   json file from the menu.
 - *Option 2* : run form CLI After you have downloaded the files neccessary (Ex2.jar, /data), open a terminal at the

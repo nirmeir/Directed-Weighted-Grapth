@@ -1,3 +1,6 @@
+package Graphics;
+
+import api.Algorithms;
 import api.DirectedWeightedGraphAlgorithms;
 
 import javax.swing.*;

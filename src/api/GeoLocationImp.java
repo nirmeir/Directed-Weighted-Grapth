@@ -1,3 +1,5 @@
+package api;
+
 public class GeoLocationImp implements api.GeoLocation {
 
     private double x;

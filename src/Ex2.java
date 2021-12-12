@@ -1,5 +1,8 @@
+import Graphics.GUI;
+import api.Algorithms;
 import api.DirectedWeightedGraph;
 import api.DirectedWeightedGraphAlgorithms;
+import api.DirectedWeightedGraphImp;
 
 import java.io.IOException;
 
@@ -40,7 +43,7 @@ public class Ex2 {
     }
 
     /**
-     * This static function will run your GUI using the json fime.
+     * This static function will run your Graphics.GUI using the json fime.
      *
      * @param json_file - a json file (e.g., G1.json - G3.gson)
      */

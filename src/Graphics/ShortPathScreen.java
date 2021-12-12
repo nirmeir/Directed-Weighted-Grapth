@@ -1,13 +1,15 @@
+package Graphics;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TspScreen {
+public class ShortPathScreen {
 
     GUI gui;
 
-    public TspScreen(GUI g) {
+    public ShortPathScreen(GUI g) {
         this.gui = g;
     }
 
@@ -27,38 +29,45 @@ public class TspScreen {
         Header.setFont(new Font("Serif", Font.BOLD, 18));
         contentPane.add(Header);
 
-        JTextArea city = new JTextArea("0,1,2,5,7");
-        city.setLocation(10, 100);
-        city.setSize(250, 50);
-        contentPane.add(city);
+        JTextArea src = new JTextArea("1");
+        src.setLocation(10, 100);
+        src.setSize(125, 50);
+        contentPane.add(src);
 
-        JButton button = new JButton("Start TSP Search");
+        JTextArea dst = new JTextArea("2");
+        dst.setLocation(140, 100);
+        dst.setSize(120, 50);
+        contentPane.add(dst);
+
+        JButton button = new JButton("Get Shortest Path");
         button.setLocation(260, 100);
         button.setSize(160, 50);
         contentPane.add(button);
 
-        JLabel srcText = new JLabel("Enter Nodes you wish to add to your city");
-        srcText.setBounds(10,75, 410,25);
+        JLabel srcText = new JLabel("Source");
+        srcText.setBounds(10,75, 125,25);
         srcText.setHorizontalAlignment(JTextField.CENTER);
         srcText.setForeground(new Color(0, 0, 0));
         srcText.setFont(new Font("Serif", Font.BOLD, 18));
         contentPane.add(srcText);
 
+        JLabel dstText = new JLabel("Destination");
+        dstText.setBounds(140,75, 120,25);
+        dstText.setHorizontalAlignment(JTextField.CENTER);
+        dstText.setForeground(new Color(0, 0, 0));
+        dstText.setFont(new Font("Serif", Font.BOLD, 18));
+        contentPane.add(dstText);
 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String cityText = city.getText();
+                String srcNode = src.getText();
+                String dstNode = dst.getText();
 
-                String[] arr = cityText.split(",");
+                int srcKey = Integer.parseInt(srcNode);
+                int dstKey = Integer.parseInt(dstNode);
 
-                int[] cityFinal = new int[arr.length];
-                int counter = 0;
-                for(String a: arr){
-                    cityFinal[counter++] = Integer.parseInt(a);
-                }
-
-                gui.tspGUI(cityFinal);
+                gui.shortestPath(srcKey, dstKey);
 
                 frame.dispose();
 
@@ -68,4 +77,5 @@ public class TspScreen {
         frame.setVisible(true);
 
     }
+
 }
