@@ -1,6 +1,6 @@
 # Directed Weighted Graph
 
-**Created by Eldad Tsemach and Ilan Sirisky**
+**Created by Eldad Tsemach, Ilan Sirisky, Nir Meir**
 
 This project is a part of our Object Oriented Programming course in Java. The above project deals with the
 implementation of a Directed Weighted graph, using Nodes and Edges. As well as implementing a number of algorithms on
